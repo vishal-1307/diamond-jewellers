@@ -1,0 +1,161 @@
+/* === COMPONENT STYLES === */
+
+/* --- Product Cards --- */
+.product-card {
+    background-color: #ffffff;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    overflow: hidden;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.product-card img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+.product-info {
+    padding: 20px;
+}
+
+.product-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: var(--color-text);
+}
+
+.product-price {
+    color: var(--color-text-muted);
+    margin-bottom: 15px;
+}
+
+/* --- Crafted With Passion --- */
+.craft-image img {
+    border-radius: 8px;
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+}
+
+.craft-text p {
+    margin-bottom: 15px;
+}
+
+.link {
+    font-weight: 600;
+    color: var(--color-primary);
+    text-decoration: underline;
+}
+
+/* --- Testimonials --- */
+.testimonial {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.stars {
+    font-size: 24px;
+    color: var(--color-primary);
+    margin-bottom: 10px;
+}
+
+.quote {
+    font-size: 20px;
+    font-style: italic;
+    color: var(--color-text-muted);
+    margin-bottom: 15px;
+}
+
+cite {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+/* --- Breadcrumbs / Section Title Left --- */
+.section-title-left {
+    font-family: var(--font-heading);
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: var(--color-text);
+}
+
+/* --- Type Cards (Shop by Type) --- */
+.type-grid {
+    gap: 15px;
+}
+
+.type-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    aspect-ratio: 1 / 1;
+    display: block;
+}
+
+.type-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+}
+
+.type-card:hover img {
+    transform: scale(1.1);
+}
+
+.type-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+    color: #fff;
+    padding: 15px;
+    font-weight: 600;
+    font-size: 15px;
+    text-align: center;
+}
+
+/* --- Grid 2-col layouts --- */
+.grid-2-cols-uneven {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+}
+
+.grid-2-cols-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+}
+
+@media (max-width: 768px) {
+
+    .section-title,
+    .section-title-left {
+        font-size: 28px;
+    }
+
+    .craft-image {
+        order: -1;
+    }
+
+    .product-card img {
+        height: 200px;
+    }
+
+    .type-card {
+        aspect-ratio: 4 / 3;
+    }
+}

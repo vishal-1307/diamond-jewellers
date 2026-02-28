@@ -1,0 +1,122 @@
+/* === FOOTER === */
+.site-footer {
+    border-top: 1px solid var(--color-border);
+    padding: 50px 0 0 0;
+    margin-top: 60px;
+    background-color: var(--color-bg);
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 2fr 1fr;
+    gap: 30px;
+    padding-bottom: 40px;
+}
+
+.footer-col {
+    padding-right: 20px;
+}
+
+.footer-col h4 {
+    font-family: var(--font-heading);
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: var(--color-text);
+}
+
+.footer-about {
+    color: var(--color-text-muted);
+    font-size: 14px;
+    margin-top: 15px;
+    line-height: 1.7;
+    max-width: 300px;
+}
+
+.footer-contact p {
+    color: var(--color-text-muted);
+    display: flex;
+    align-items: start;
+    gap: 10px;
+    margin-bottom: 12px;
+    font-size: 15px;
+}
+
+.footer-contact p .material-symbols-outlined {
+    font-size: 18px;
+    margin-top: 3px;
+    color: var(--color-primary);
+}
+
+.footer-timings p {
+    color: var(--color-text-muted);
+    font-size: 15px;
+    margin-bottom: 5px;
+}
+
+.footer-social {
+    display: flex;
+    gap: 10px;
+}
+
+.social-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: #ffffff;
+    border: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.social-icon:hover {
+    margin-top: -5px;
+    /* Fixed from legacy 20px which was too much jump */
+    background-color: var(--color-primary);
+    color: #fff;
+}
+
+.footer-bottom-bar {
+    border-top: 1px solid var(--color-border);
+    padding: 20px 0;
+}
+
+.footer-bottom-bar p {
+    color: var(--color-text-muted);
+    font-size: 14px;
+    text-align: center;
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        text-align: center;
+    }
+
+    .footer-col {
+        padding-right: 0;
+    }
+
+    .footer-about {
+        max-width: 100%;
+        margin: 15px auto 0;
+    }
+
+    .footer-contact p {
+        justify-content: center;
+        word-break: break-word;
+    }
+
+    .footer-social {
+        justify-content: center;
+    }
+
+    .brand {
+        justify-content: center;
+    }
+}
