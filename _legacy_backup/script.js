@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 id: btn.getAttribute('data-id') || Date.now() + Math.random(),
                 name: btn.getAttribute('data-name'),
                 price: parseFloat(btn.getAttribute('data-price')),
-                image: btn.getAttribute('data-image') || 'Assets/default.png',
+                image: btn.getAttribute('data-image') || 'assets/default.png',
                 quantity: 1
             };
             addToCart(product);
