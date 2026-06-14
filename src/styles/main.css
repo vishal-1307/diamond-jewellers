@@ -70,13 +70,14 @@
 
 .hero-title {
     font-family: var(--font-heading);
-    font-size: 52px;
+    font-size: clamp(34px, 5vw, 58px);
     margin-bottom: 15px;
     text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    letter-spacing: 0.02em;
 }
 
 .hero-lead {
-    font-size: 18px;
+    font-size: clamp(16px, 2vw, 20px);
     margin-bottom: 30px;
     text-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
 }
@@ -98,6 +99,7 @@
     cursor: pointer;
     z-index: 10;
     transition: background 0.3s, transform 0.3s;
+    -webkit-backdrop-filter: blur(4px);
     backdrop-filter: blur(4px);
 }
 
@@ -187,9 +189,9 @@
 
 .btn {
     padding: 12px 24px;
-    border-radius: 5px;
+    border-radius: 999px;
     font-weight: 600;
-    transition: all 0.3s;
+    transition: transform 0.2s, box-shadow 0.3s, background-color 0.3s;
     cursor: pointer;
     border: none;
     display: inline-block;
@@ -198,10 +200,12 @@
 .btn-primary {
     background-color: var(--color-primary);
     color: #ffffff;
+    box-shadow: 0 10px 22px rgba(183, 134, 11, 0.3);
 }
 
 .btn-primary:hover {
     background-color: #a0750a;
+    transform: translateY(-1px);
 }
 
 /* ... We can copy the rest of layout styles later to separate files ... */
@@ -215,9 +219,10 @@
 
 .section-title {
     font-family: var(--font-heading);
-    font-size: 36px;
+    font-size: clamp(30px, 4vw, 42px);
     text-align: center;
     margin-bottom: 40px;
+    letter-spacing: 0.01em;
 }
 
 .grid {
@@ -364,4 +369,55 @@
         padding: 12px;
         font-size: 14px;
     }
+}
+
+.hero-slide-1 {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0.42)), url('/assets/Hero129.png');
+}
+
+.hero-slide-2 {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0.42)), url('/assets/hero_bridal_set.png');
+}
+
+.hero-slide-3 {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0.42)), url('/assets/hero_custom_design.png');
+}
+
+.section-cta-center {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.contact-cta-container {
+    text-align: center;
+    max-width: 700px;
+}
+
+.contact-cta-text {
+    color: var(--color-text-muted);
+    margin-bottom: 30px;
+}
+
+.contact-cta-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.whatsapp-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #25D366;
+    border-color: #25D366;
+    padding: 14px 28px;
+}
+
+.whatsapp-icon {
+    font-size: 20px;
+}
+
+.btn-large {
+    padding: 14px 28px;
 }

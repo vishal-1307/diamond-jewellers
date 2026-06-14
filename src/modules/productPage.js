@@ -45,10 +45,10 @@ export function initProductPage() {
                     data-name="${product.name}" 
                     data-price="0" 
                     data-image="${product.image}">
-                    Add to Cart
+                    Save Design
                 </button>
                 <a href="https://wa.me/919931454704?text=${encodeURIComponent('Hi, I am interested in: ' + product.name + ' (' + product.category + ' ' + product.type + ')')}" 
-                   target="_blank" class="btn btn-secondary" style="background: #25D366; color: #fff; border-color: #25D366;">
+                         target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="background: #25D366; color: #fff; border-color: #25D366;">
                     <span class="material-symbols-outlined" style="vertical-align: middle; font-size:18px; margin-right:4px;">chat</span>
                     Enquire on WhatsApp
                 </a>
@@ -83,7 +83,7 @@ export function initProductPage() {
                             <button class="btn btn-secondary add-to-cart-btn" 
                                 data-name="${p.name}" 
                                 data-price="0" 
-                                data-image="${p.image}">Add to Cart</button>
+                                data-image="${p.image}">Save Design</button>
                         </div>
                     </div>
                 `).join('');

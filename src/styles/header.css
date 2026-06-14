@@ -38,13 +38,14 @@
 
 .main-nav {
     display: flex;
-    gap: 30px;
+    gap: 20px;
 }
 
 .main-nav a {
     font-weight: 500;
     color: var(--color-text-muted);
     transition: color 0.3s;
+    font-size: 15px;
 }
 
 .main-nav a:hover {

@@ -24,7 +24,7 @@
     max-width: 600px;
 }
 
-#search-input {
+#collection-search-input {
     flex: 1;
     padding: 10px 15px;
     border: 1px solid var(--color-border);
@@ -475,7 +475,7 @@
         max-width: 100%;
     }
 
-    #search-input,
+    #collection-search-input,
     #sort-select {
         width: 100%;
     }

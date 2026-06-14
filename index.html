@@ -31,8 +31,7 @@
     <main>
         <section class="hero-carousel-container">
             <div class="hero-carousel" id="hero-carousel">
-                <div class="hero-slide active"
-                    style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('/assets/Hero129.png');">
+                <div class="hero-slide hero-slide-1 active">
                     <div class="hero-content">
                         <h1 class="hero-title">Elegance Redefined. Timeless Beauty.</h1>
                         <p class="hero-lead">Discover our exquisite collection of handcrafted jewellery, designed to
@@ -40,16 +39,14 @@
                         <a href="collections.html" class="btn btn-primary">Shop Now</a>
                     </div>
                 </div>
-                <div class="hero-slide"
-                    style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('/assets/hero_bridal_set.png');">
+                <div class="hero-slide hero-slide-2">
                     <div class="hero-content">
                         <h1 class="hero-title">Bridal Masterpieces</h1>
                         <p class="hero-lead">Make your special day unforgettable with our exclusive bridal sets.</p>
                         <a href="collections.html" class="btn btn-primary">Explore Bridal</a>
                     </div>
                 </div>
-                <div class="hero-slide"
-                    style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('/assets/hero_custom_design.png');">
+                <div class="hero-slide hero-slide-3">
                     <div class="hero-content">
                         <h1 class="hero-title">Bespoke Elegance</h1>
                         <p class="hero-lead">Bring your vision to life with our custom design services.</p>
@@ -101,7 +98,7 @@
                 <div id="bestsellers-mount" class="grid grid-4-cols">
                     <!-- Populated by JS -->
                 </div>
-                <div style="text-align: center; margin-top: 30px;">
+                <div class="section-cta-center">
                     <a href="collections.html" class="btn btn-primary">View All Products</a>
                 </div>
             </div>
@@ -204,18 +201,17 @@
         </section>
 
         <section class="section">
-            <div class="container" style="text-align: center; max-width: 700px;">
+            <div class="container contact-cta-container">
                 <h2 class="section-title">Get In Touch</h2>
-                <p style="color: var(--color-text-muted); margin-bottom: 30px;">Have a question or a custom request?
+                <p class="contact-cta-text">Have a question or a custom request?
                     We'd love to hear from you.</p>
-                <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                <div class="contact-cta-actions">
                     <a href="https://wa.me/919931454704?text=Hi%2C%20I%20have%20a%20question%20about%20your%20jewellery."
-                        target="_blank" class="btn btn-primary"
-                        style="display: inline-flex; align-items: center; gap: 8px; background: #25D366; border-color: #25D366; padding: 14px 28px;">
-                        <span class="material-symbols-outlined" style="font-size: 20px;">chat</span>
+                        target="_blank" rel="noopener noreferrer" class="btn btn-primary whatsapp-btn">
+                        <span class="material-symbols-outlined whatsapp-icon">chat</span>
                         Chat on WhatsApp
                     </a>
-                    <a href="contact.html" class="btn btn-secondary" style="padding: 14px 28px;">Visit Contact Page</a>
+                    <a href="contact.html" class="btn btn-secondary btn-large">Visit Contact Page</a>
                 </div>
             </div>
         </section>
@@ -223,14 +219,6 @@
     </main>
 
     <div id="footer-mount"></div>
-
-    <!-- Legacy script can be removed or kept if it has critical logic not yet migrated. 
-         Ideally, migrate logic to main.js. But for now, let's keep it but formatted for module?
-         No, script.js had DOMContentLoaded. Vite runs module.
-         We should implement the Contact Form logic in main.js or a separate component.
-         For this step, I'll rely on global script if needed, or better:
-         Let's assume main.js handles the layout. I'll port the form logic later.
-    -->
 
 </body>
 

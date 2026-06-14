@@ -5,8 +5,8 @@ export function initFaqAccordion() {
     if (faqItems.length === 0) return;
 
     faqItems.forEach(item => {
-        const question = item.querySelector('h4');
-        const answer = item.querySelector('p');
+        const question = item.querySelector('.faq-question');
+        const answer = item.querySelector('.faq-answer');
 
         if (!question || !answer) return;
 
@@ -17,31 +17,19 @@ export function initFaqAccordion() {
         answer.style.paddingTop = '0';
         answer.style.paddingBottom = '0';
 
-        // Make question clickable
-        question.style.cursor = 'pointer';
-        question.style.display = 'flex';
-        question.style.justifyContent = 'space-between';
-        question.style.alignItems = 'center';
-
-        // Add toggle icon
-        const icon = document.createElement('span');
-        icon.className = 'material-symbols-outlined';
-        icon.textContent = 'expand_more';
-        icon.style.transition = 'transform 0.3s';
-        question.appendChild(icon);
-
         question.addEventListener('click', () => {
             const isOpen = answer.style.maxHeight !== '0px';
 
             // Close all other items
             faqItems.forEach(otherItem => {
-                const otherAnswer = otherItem.querySelector('p');
-                const otherIcon = otherItem.querySelector('h4 .material-symbols-outlined');
+                const otherQuestion = otherItem.querySelector('.faq-question');
+                const otherAnswer = otherItem.querySelector('.faq-answer');
                 if (otherItem !== item && otherAnswer) {
                     otherAnswer.style.maxHeight = '0px';
                     otherAnswer.style.paddingTop = '0';
                     otherAnswer.style.paddingBottom = '0';
-                    if (otherIcon) otherIcon.style.transform = 'rotate(0deg)';
+                    otherQuestion?.setAttribute('aria-expanded', 'false');
+                    otherItem.classList.remove('faq-open');
                 }
             });
 
@@ -50,12 +38,14 @@ export function initFaqAccordion() {
                 answer.style.maxHeight = '0px';
                 answer.style.paddingTop = '0';
                 answer.style.paddingBottom = '0';
-                icon.style.transform = 'rotate(0deg)';
+                question.setAttribute('aria-expanded', 'false');
+                item.classList.remove('faq-open');
             } else {
                 answer.style.maxHeight = answer.scrollHeight + 20 + 'px';
                 answer.style.paddingTop = '10px';
                 answer.style.paddingBottom = '10px';
-                icon.style.transform = 'rotate(180deg)';
+                question.setAttribute('aria-expanded', 'true');
+                item.classList.add('faq-open');
             }
         });
     });

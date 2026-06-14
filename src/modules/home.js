@@ -45,7 +45,7 @@ function createProductCard(product) {
                     data-name="${product.name}" 
                     data-price="0" 
                     data-image="${product.image}">
-                    Add to Cart
+                    Save Design
                 </button>
             </div>
         </div>

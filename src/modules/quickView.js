@@ -3,6 +3,8 @@
 import { products } from '../data/products.js';
 
 export function initQuickView() {
+    if (!document.querySelector('.btn-quick-view')) return;
+
     // Create modal element
     const modal = document.createElement('div');
     modal.id = 'quick-view-modal';
@@ -17,7 +19,7 @@ export function initQuickView() {
                 <div class="qv-meta"></div>
                 <p class="qv-desc"></p>
                 <div class="qv-actions">
-                    <button class="btn btn-primary add-to-cart-btn">Add to Cart</button>
+                    <button class="btn btn-primary add-to-cart-btn">Save Design</button>
                     <button class="qv-share-btn" title="Share via WhatsApp">
                         <span class="material-symbols-outlined" style="font-size:18px">share</span> Share
                     </button>
@@ -25,6 +27,9 @@ export function initQuickView() {
             </div>
         </div>
     `;
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-label', 'Quick view');
     document.body.appendChild(modal);
 
     const closeBtn = modal.querySelector('.qv-close');

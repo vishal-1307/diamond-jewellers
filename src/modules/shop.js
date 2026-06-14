@@ -4,7 +4,7 @@ import { categories, types, priceRanges } from '../data/categories.js';
 export function initShop() {
     const productsGrid = document.getElementById('products-grid');
     const filterContainer = document.getElementById('filters-sidebar');
-    const searchInput = document.getElementById('search-input');
+    const searchInput = document.getElementById('collection-search-input') || document.getElementById('search-input');
     const sortSelect = document.getElementById('sort-select');
 
     // Only run on pages with a product grid

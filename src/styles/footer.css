@@ -58,6 +58,10 @@
     gap: 10px;
 }
 
+.footer-social-heading {
+    margin-top: 15px;
+}
+
 .social-icon {
     width: 40px;
     height: 40px;

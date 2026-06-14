@@ -16,6 +16,8 @@ export function injectHeader() {
             <nav class="main-nav">
                 <a href="collections.html">Collections</a>
                 <a href="custom.html">Custom Orders</a>
+                <a href="gallery.html">Gallery</a>
+                <a href="faq.html">FAQ</a>
                 <a href="about.html">About</a>
                 <a href="contact.html">Contact</a>
             </nav>
@@ -79,11 +81,11 @@ export function injectFooter() {
                     <p><strong>Mon-Sat:</strong> 10:00AM–8:00PM</p>
                     <p><strong>Sunday:</strong> Closed</p>
                 </div>
-                <h4 style="margin-top: 15px;">Connect With Us</h4>
+                <h4 class="footer-social-heading">Connect With Us</h4>
                 <div class="footer-social">
-                    <a href="https://wa.me/919931454704" target="_blank" class="social-icon" title="WhatsApp"><span class="material-symbols-outlined">chat</span></a>
-                    <a href="https://www.instagram.com/" target="_blank" class="social-icon" title="Instagram"><span class="material-symbols-outlined">photo_camera</span></a>
-                    <a href="https://www.facebook.com/" target="_blank" class="social-icon" title="Facebook"><span class="material-symbols-outlined">group</span></a>
+                    <a href="https://wa.me/919931454704" target="_blank" rel="noopener noreferrer" class="social-icon" title="WhatsApp"><span class="material-symbols-outlined">chat</span></a>
+                    <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" class="social-icon" title="Instagram"><span class="material-symbols-outlined">photo_camera</span></a>
+                    <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" class="social-icon" title="Facebook"><span class="material-symbols-outlined">group</span></a>
                 </div>
             </div>
         </div>
