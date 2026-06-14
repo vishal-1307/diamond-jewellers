@@ -1,5 +1,17 @@
+# dependencies
 node_modules/
+
+# build output
 dist/
-.DS_Store
-*.log
+.astro/
+
+# generated optimized images / icons (re-created by `npm run images` at build time)
+public/assets/opt/
+public/og/
+public/icons/
+
+# env & logs
 .env
+*.log
+.DS_Store
+desktop.ini

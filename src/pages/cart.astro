@@ -1,0 +1,11 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SavedDesigns from '../components/islands/SavedDesigns.tsx';
+---
+
+<BaseLayout title="Saved Designs" description="Your shortlisted Diamond Jewellers designs. Send them on WhatsApp for details and availability.">
+  <div class="container-dj section">
+    <h1 class="section-title">Your Saved Designs</h1>
+    <SavedDesigns client:only="react" />
+  </div>
+</BaseLayout>

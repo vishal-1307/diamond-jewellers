@@ -1,0 +1,11 @@
+{
+  "updated": "2026-06-14",
+  "currency": "INR",
+  "unit": "per 10g",
+  "note": "Indicative rates. Please enquire for today's exact price.",
+  "rates": {
+    "gold_24k": 98500,
+    "gold_22k": 90300,
+    "silver": 1150
+  }
+}

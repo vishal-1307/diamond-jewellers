@@ -1,0 +1,103 @@
+---
+import Icon from './Icon.astro';
+import { site } from '../config/site';
+import { mainNav, isActive } from '../config/nav';
+import SearchIsland from './islands/SearchOverlay.tsx';
+
+const current = Astro.url.pathname;
+---
+
+<header class="sticky top-0 z-50 border-b border-[var(--color-line)] bg-white/95 backdrop-blur">
+  <div class="container-dj flex h-14 items-center justify-between md:h-16">
+    <!-- Brand -->
+    <a href="/" class="flex items-center gap-2 font-[var(--font-heading)] text-lg font-bold md:text-xl">
+      <Icon name="diamond" size={24} class="text-[var(--color-gold)]" />
+      <span>{site.name}</span>
+    </a>
+
+    <!-- Desktop nav -->
+    <nav class="hidden items-center gap-6 md:flex">
+      {mainNav.map((item) => (
+        <a
+          href={item.href}
+          class:list={[
+            'text-[15px] font-medium transition-colors hover:text-[var(--color-gold)]',
+            isActive(current, item.href) ? 'text-[var(--color-gold)]' : 'text-[var(--color-muted)]',
+          ]}
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+
+    <!-- Actions -->
+    <div class="flex items-center gap-1">
+      <SearchIsland client:idle />
+      <a
+        href="/cart"
+        class="relative grid h-11 w-11 place-items-center text-[var(--color-muted)] hover:text-[var(--color-ink)]"
+        aria-label="Saved designs"
+      >
+        <Icon name="heart" size={22} />
+        <span
+          id="cart-count"
+          class="absolute right-1 top-1 hidden min-w-[18px] rounded-full bg-[var(--color-gold)] px-1 text-center text-[11px] font-semibold leading-[18px] text-white"
+        ></span>
+      </a>
+      <button
+        id="menu-toggle"
+        class="grid h-11 w-11 place-items-center text-[var(--color-ink)] md:hidden"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+      >
+        <Icon name="menu" size={24} />
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile full-screen overlay menu -->
+  <div
+    id="mobile-menu"
+    class="fixed inset-0 z-50 hidden flex-col bg-white px-6 pt-5 md:hidden"
+  >
+    <div class="flex items-center justify-between">
+      <span class="flex items-center gap-2 font-[var(--font-heading)] text-lg font-bold">
+        <Icon name="diamond" size={22} class="text-[var(--color-gold)]" />
+        {site.name}
+      </span>
+      <button id="menu-close" class="grid h-11 w-11 place-items-center" aria-label="Close menu">
+        <Icon name="close" size={26} />
+      </button>
+    </div>
+    <nav class="mt-8 flex flex-col gap-1">
+      <a href="/" class="border-b border-[var(--color-line)] py-4 font-[var(--font-heading)] text-xl">Home</a>
+      {mainNav.map((item) => (
+        <a href={item.href} class="border-b border-[var(--color-line)] py-4 font-[var(--font-heading)] text-xl">
+          {item.label}
+        </a>
+      ))}
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById('menu-toggle');
+  const close = document.getElementById('menu-close');
+  const menu = document.getElementById('mobile-menu');
+  const open = () => {
+    menu?.classList.remove('hidden');
+    menu?.classList.add('flex');
+    toggle?.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  };
+  const shut = () => {
+    menu?.classList.add('hidden');
+    menu?.classList.remove('flex');
+    toggle?.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  };
+  toggle?.addEventListener('click', open);
+  close?.addEventListener('click', shut);
+  menu?.querySelectorAll('a').forEach((a) => a.addEventListener('click', shut));
+</script>

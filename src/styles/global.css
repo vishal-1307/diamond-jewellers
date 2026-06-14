@@ -1,0 +1,169 @@
+@import 'tailwindcss';
+
+/* ============================================================
+   DIAMOND JEWELLERS — DESIGN SYSTEM (Royal Classic)
+   Mobile-first. All colors are tokens for easy re-theming.
+   ============================================================ */
+
+@theme {
+  /* — Brand palette (Royal Classic / gold) — */
+  --color-cream: #fdfcf9; /* page background        */
+  --color-sand: #f8f7f5; /* alt section background  */
+  --color-ink: #2b2b2b; /* primary text            */
+  --color-muted: #6a6a6a; /* secondary text          */
+  --color-gold: #b7860b; /* primary / accent        */
+  --color-gold-dark: #97700a; /* hover               */
+  --color-line: #e7e3da; /* borders                 */
+  --color-whatsapp: #25d366;
+
+  /* — Typography — */
+  --font-heading: 'Playfair Display', Georgia, serif;
+  --font-body: 'Poppins', system-ui, -apple-system, sans-serif;
+
+  /* — Fluid type scale (mobile → desktop via clamp) — */
+  --text-h1: clamp(1.75rem, 5vw, 2.75rem); /* 28 → 44 */
+  --text-h2: clamp(1.375rem, 3.5vw, 2.125rem); /* 22 → 34 */
+  --text-h3: clamp(1.0625rem, 2vw, 1.25rem); /* 17 → 20 */
+
+  /* — Shadows — */
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.06);
+  --shadow-card-hover: 0 12px 30px rgba(0, 0, 0, 0.1);
+  --shadow-gold: 0 10px 22px rgba(183, 134, 11, 0.25);
+}
+
+/* ============================================================
+   REFERENCE ONLY — alternate palettes preserved for future
+   re-theming of client sites. Not shipped. To use, move into
+   @theme or apply via a [data-theme] block.
+   ----------------------------------------------------------
+   Midnight Luxury:  bg #0a0a0a  alt #111  text #e0e0e0
+                     muted #a0a0a0  primary #F7E7CE (champagne)
+                     line #333
+   Modern Minimal:   bg #ffffff  alt #f4f4f4  text #222
+                     muted #555  primary #B76E79 (rose gold)
+                     line #eee
+   ============================================================ */
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-body);
+    color: var(--color-ink);
+    background-color: var(--color-cream);
+    background-image:
+      radial-gradient(circle at 0% 0%, rgba(183, 134, 11, 0.07), transparent 36%),
+      radial-gradient(circle at 100% 12%, rgba(183, 134, 11, 0.05), transparent 32%);
+    line-height: 1.6;
+    /* base font-size 16px — never smaller on mobile (prevents iOS zoom) */
+    font-size: 16px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-heading);
+    color: var(--color-ink);
+    line-height: 1.2;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* Visible focus ring for keyboard users */
+  :where(a, button, input, textarea, select):focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background: rgba(183, 134, 11, 0.22);
+  }
+}
+
+@layer components {
+  /* — Reusable button primitives — */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full font-semibold transition;
+    min-height: 44px; /* touch target */
+    padding: 0.75rem 1.5rem;
+  }
+  .btn-primary {
+    background-color: var(--color-gold);
+    color: #fff;
+    box-shadow: var(--shadow-gold);
+  }
+  .btn-primary:hover {
+    background-color: var(--color-gold-dark);
+  }
+  .btn-secondary {
+    background-color: transparent;
+    color: var(--color-ink);
+    border: 1px solid var(--color-line);
+  }
+  .btn-secondary:hover {
+    background-color: var(--color-sand);
+  }
+  .btn-whatsapp {
+    background-color: var(--color-whatsapp);
+    color: #fff;
+  }
+  .btn-whatsapp:hover {
+    filter: brightness(0.95);
+  }
+
+  /* — Page container — */
+  .container-dj {
+    width: 100%;
+    max-width: 1200px;
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
+  @media (min-width: 768px) {
+    .container-dj {
+      padding-inline: 1.5rem;
+    }
+  }
+
+  /* — Section rhythm — */
+  .section {
+    padding-block: 2.25rem;
+  }
+  @media (min-width: 1024px) {
+    .section {
+      padding-block: 4rem;
+    }
+  }
+
+  .section-title {
+    font-size: var(--text-h2);
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  @media (min-width: 1024px) {
+    .section-title {
+      margin-bottom: 2.5rem;
+    }
+  }
+}
+
+/* Safe-area helper for sticky bottom UI on notch phones */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.bottom-safe {
+  bottom: env(safe-area-inset-bottom, 0px);
+}

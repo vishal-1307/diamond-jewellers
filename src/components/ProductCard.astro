@@ -1,0 +1,82 @@
+---
+import type { Product } from '../lib/products';
+import { occasionsFor } from '../lib/products';
+import { imgFull, imgSrcset, cardSizes } from '../lib/img';
+import { productEnquiry } from '../lib/waLink';
+import Icon from './Icon.astro';
+
+interface Props {
+  product: Product;
+  eager?: boolean;
+}
+const { product: p, eager = false } = Astro.props;
+const href = `/product/${p.id}`;
+const occasions = occasionsFor(p);
+---
+
+<article
+  class="product-card group relative flex flex-col overflow-hidden rounded-xl border border-[var(--color-line)] bg-white shadow-[var(--shadow-card)] transition hover:-translate-y-1 hover:shadow-[var(--shadow-card-hover)]"
+  data-category={p.category}
+  data-type={p.type}
+  data-occasions={occasions.join(',')}
+  data-new={String(p.isNew)}
+  data-bestseller={String(p.isBestSeller)}
+  data-name={p.name}
+  data-rating={p.rating}
+>
+  <!-- Image -->
+  <div class="relative aspect-square overflow-hidden bg-[var(--color-sand)]">
+    <img
+      src={imgFull(p.image)}
+      srcset={imgSrcset(p.image)}
+      sizes={cardSizes}
+      alt={p.name}
+      width={800}
+      height={800}
+      loading={eager ? 'eager' : 'lazy'}
+      decoding="async"
+      class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+    />
+    <!-- Badges -->
+    <div class="absolute left-2 top-2 flex flex-col gap-1">
+      {p.isNew && <span class="rounded bg-[var(--color-gold)] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-white">New</span>}
+      {p.isBestSeller && <span class="rounded border border-[var(--color-gold)] bg-white px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-[var(--color-gold)]">Best Seller</span>}
+    </div>
+
+    <!-- Save (wishlist) toggle -->
+    <button
+      class="save-heart absolute right-2 top-2 z-10 grid h-9 w-9 place-items-center rounded-full bg-white/85 text-[var(--color-muted)] backdrop-blur transition aria-pressed:bg-[var(--color-gold)] aria-pressed:text-white"
+      data-save
+      data-id={p.id}
+      data-name={p.name}
+      data-image={p.image}
+      aria-pressed="false"
+      aria-label={`Save ${p.name}`}
+    >
+      <Icon name="heart" size={18} />
+    </button>
+  </div>
+
+  <!-- Info -->
+  <div class="flex flex-1 flex-col p-3 text-center md:p-4">
+    <p class="text-[10px] uppercase tracking-wider text-[var(--color-muted)]">{p.category} · {p.type}</p>
+    <h3 class="mt-1 truncate font-[var(--font-heading)] text-[var(--text-h3)] leading-tight">{p.name}</h3>
+    {(p.weight || p.purity) && (
+      <p class="mt-1 text-xs text-[var(--color-muted)]">{[p.weight, p.purity].filter(Boolean).join(' · ')}</p>
+    )}
+
+    <!-- Enquire CTA (above the stretched link) -->
+    <a
+      href={productEnquiry(p.name)}
+      target="_blank"
+      rel="noopener"
+      class="btn btn-whatsapp relative z-10 mt-3 w-full text-sm"
+    >
+      <Icon name="chat" size={16} />
+      Enquire
+    </a>
+  </div>
+
+  <!-- Stretched link to detail page (whole card tappable) -->
+  <a href={href} class="absolute inset-0 z-0" aria-label={`View ${p.name}`}></a>
+</article>

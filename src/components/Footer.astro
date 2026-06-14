@@ -1,0 +1,70 @@
+---
+import Icon from './Icon.astro';
+import { site } from '../config/site';
+import { generalEnquiry } from '../lib/waLink';
+---
+
+<footer class="mt-16 border-t border-[var(--color-line)] bg-white">
+  <div class="container-dj grid gap-8 py-12 text-center md:grid-cols-3 md:text-left">
+    <!-- Brand -->
+    <div>
+      <div class="flex items-center justify-center gap-2 md:justify-start">
+        <Icon name="diamond" size={22} class="text-[var(--color-gold)]" />
+        <span class="font-[var(--font-heading)] text-lg font-bold">{site.name}</span>
+      </div>
+      <p class="mx-auto mt-4 max-w-xs text-sm leading-relaxed text-[var(--color-muted)] md:mx-0">
+        Crafting timeless elegance with ethically sourced diamonds and precious metals for your special moments.
+      </p>
+    </div>
+
+    <!-- Contact -->
+    <div>
+      <h4 class="mb-4 font-[var(--font-heading)] text-lg">Get in Touch</h4>
+      <address class="space-y-3 text-sm not-italic text-[var(--color-muted)]">
+        <p class="flex items-start justify-center gap-2 md:justify-start">
+          <Icon name="location" size={18} class="mt-0.5 shrink-0 text-[var(--color-gold)]" />
+          <span>{site.address.line1}<br />{site.address.line2}</span>
+        </p>
+        <p class="flex items-center justify-center gap-2 md:justify-start">
+          <Icon name="phone" size={18} class="shrink-0 text-[var(--color-gold)]" />
+          <a href={site.phoneTel}>{site.phoneDisplay}</a>
+        </p>
+        <p class="flex items-center justify-center gap-2 break-all md:justify-start">
+          <Icon name="mail" size={18} class="shrink-0 text-[var(--color-gold)]" />
+          <a href={`mailto:${site.email}`}>{site.email}</a>
+        </p>
+      </address>
+    </div>
+
+    <!-- Hours + Social -->
+    <div>
+      <h4 class="mb-4 font-[var(--font-heading)] text-lg">Visit Us</h4>
+      <p class="text-sm text-[var(--color-muted)]">{site.hours.display}</p>
+      <p class="text-sm text-[var(--color-muted)]">{site.hours.sunday}</p>
+
+      <h4 class="mb-3 mt-5 font-[var(--font-heading)] text-base">Connect</h4>
+      <div class="flex justify-center gap-3 md:justify-start">
+        <a href={generalEnquiry()} target="_blank" rel="noopener" aria-label="WhatsApp"
+          class="grid h-11 w-11 place-items-center rounded-full border border-[var(--color-line)] text-[var(--color-muted)] transition hover:border-[var(--color-gold)] hover:text-[var(--color-gold)]">
+          <Icon name="chat" size={20} />
+        </a>
+        {site.social.instagram && (
+          <a href={site.social.instagram} target="_blank" rel="noopener" aria-label="Instagram"
+            class="grid h-11 w-11 place-items-center rounded-full border border-[var(--color-line)] text-[var(--color-muted)] transition hover:border-[var(--color-gold)] hover:text-[var(--color-gold)]">
+            <Icon name="instagram" size={20} />
+          </a>
+        )}
+        {site.social.facebook && (
+          <a href={site.social.facebook} target="_blank" rel="noopener" aria-label="Facebook"
+            class="grid h-11 w-11 place-items-center rounded-full border border-[var(--color-line)] text-[var(--color-muted)] transition hover:border-[var(--color-gold)] hover:text-[var(--color-gold)]">
+            <Icon name="facebook" size={20} />
+          </a>
+        )}
+      </div>
+    </div>
+  </div>
+
+  <div class="border-t border-[var(--color-line)] py-5">
+    <p class="text-center text-sm text-[var(--color-muted)]">© 2026 {site.name}. All rights reserved.</p>
+  </div>
+</footer>

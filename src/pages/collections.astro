@@ -1,0 +1,217 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProductCard from '../components/ProductCard.astro';
+import Icon from '../components/Icon.astro';
+import { products, CATEGORIES, TYPES, OCCASIONS } from '../lib/products';
+---
+
+<BaseLayout
+  title="Collections"
+  description="Browse our complete collection of handcrafted rings, necklaces, earrings, bangles, gemstone jewellery and bridal sets. Enquire on WhatsApp for details."
+  ogImage="/og/collections.jpg"
+>
+  <div class="container-dj section">
+    <h1 class="section-title">Our Collections</h1>
+
+    <!-- Toolbar -->
+    <div class="mb-6 flex items-center gap-3">
+      <button id="filter-open" class="btn btn-secondary flex-1 md:hidden">
+        <Icon name="grid" size={18} /> Filters <span id="filter-count-badge" class="ml-1 hidden rounded-full bg-[var(--color-gold)] px-2 text-xs text-white"></span>
+      </button>
+      <label class="ml-auto flex items-center gap-2 text-sm">
+        <span class="hidden text-[var(--color-muted)] sm:inline">Sort</span>
+        <select id="sort-select" class="rounded-lg border border-[var(--color-line)] px-3 py-2 text-sm">
+          <option value="featured">Featured</option>
+          <option value="rating">Top Rated</option>
+          <option value="newest">New Arrivals</option>
+          <option value="name">Name A–Z</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="grid gap-6 md:grid-cols-[240px_1fr]">
+      <!-- Filter panel: sidebar on desktop, bottom-sheet on mobile -->
+      <aside
+        id="filter-panel"
+        class="fixed inset-x-0 bottom-0 z-50 max-h-[80vh] translate-y-full overflow-y-auto rounded-t-2xl border-t border-[var(--color-line)] bg-white p-5 pb-safe shadow-2xl transition-transform duration-300 md:static md:z-auto md:max-h-none md:translate-y-0 md:rounded-none md:border-0 md:p-0 md:shadow-none"
+      >
+        <div class="mb-4 flex items-center justify-between md:hidden">
+          <h2 class="font-[var(--font-heading)] text-xl">Filters</h2>
+          <button id="filter-close" aria-label="Close filters" class="text-2xl">×</button>
+        </div>
+
+        <div class="space-y-6">
+          <fieldset>
+            <legend class="mb-2 font-[var(--font-heading)] text-base">Material</legend>
+            <div class="flex flex-wrap gap-2">
+              {CATEGORIES.map((c) => (
+                <button class="filter-chip" data-group="category" data-value={c}>{c}</button>
+              ))}
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend class="mb-2 font-[var(--font-heading)] text-base">Type</legend>
+            <div class="flex flex-wrap gap-2">
+              {TYPES.map((t) => (
+                <button class="filter-chip" data-group="type" data-value={t}>{t}</button>
+              ))}
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend class="mb-2 font-[var(--font-heading)] text-base">Occasion</legend>
+            <div class="flex flex-wrap gap-2">
+              {OCCASIONS.map((o) => (
+                <button class="filter-chip" data-group="occasion" data-value={o}>{o}</button>
+              ))}
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend class="mb-2 font-[var(--font-heading)] text-base">Show</legend>
+            <div class="flex flex-wrap gap-2">
+              <button class="filter-chip" data-group="flag" data-value="new">New Arrivals</button>
+              <button class="filter-chip" data-group="flag" data-value="bestseller">Best Sellers</button>
+            </div>
+          </fieldset>
+
+          <div class="flex gap-2">
+            <button id="filter-clear" class="btn btn-secondary flex-1 text-sm">Clear All</button>
+            <button id="filter-apply" class="btn btn-primary flex-1 text-sm md:hidden">Show Results</button>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Product grid (all SSR-rendered for SEO; filtered client-side) -->
+      <div>
+        <p id="result-count" class="mb-4 text-sm text-[var(--color-muted)]"></p>
+        <div id="product-grid" class="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-6">
+          {products.map((p) => <ProductCard product={p} />)}
+        </div>
+        <p id="no-results" class="hidden py-16 text-center text-[var(--color-muted)]">No designs match your filters. <button id="no-results-clear" class="text-[var(--color-gold)] underline">Clear filters</button></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Backdrop for mobile filter sheet -->
+  <div id="filter-backdrop" class="fixed inset-0 z-40 hidden bg-black/40 md:hidden"></div>
+</BaseLayout>
+
+<style>
+  .filter-chip {
+    border: 1px solid var(--color-line);
+    border-radius: 9999px;
+    padding: 0.4rem 0.85rem;
+    font-size: 0.8rem;
+    color: var(--color-muted);
+    transition: all 0.15s;
+    min-height: 36px;
+  }
+  .filter-chip[aria-pressed='true'] {
+    background: var(--color-gold);
+    border-color: var(--color-gold);
+    color: #fff;
+  }
+</style>
+
+<script>
+  const grid = document.getElementById('product-grid')!;
+  const cards = Array.from(grid.querySelectorAll<HTMLElement>('.product-card'));
+  const chips = Array.from(document.querySelectorAll<HTMLButtonElement>('.filter-chip'));
+  const sortSel = document.getElementById('sort-select') as HTMLSelectElement;
+  const countEl = document.getElementById('result-count')!;
+  const noResults = document.getElementById('no-results')!;
+  const badge = document.getElementById('filter-count-badge')!;
+
+  const selected = { category: new Set<string>(), type: new Set<string>(), occasion: new Set<string>(), flag: new Set<string>() };
+
+  // Seed from URL (?category=, ?type=, ?occasion=)
+  const params = new URLSearchParams(location.search);
+  (['category', 'type', 'occasion'] as const).forEach((g) => {
+    const v = params.get(g);
+    if (v) selected[g].add(v);
+  });
+
+  function syncChips() {
+    chips.forEach((c) => {
+      const g = c.dataset.group as keyof typeof selected;
+      const on = selected[g].has(c.dataset.value!);
+      c.setAttribute('aria-pressed', String(on));
+    });
+    const total = Object.values(selected).reduce((a, s) => a + s.size, 0);
+    if (total > 0) { badge.textContent = String(total); badge.classList.remove('hidden'); }
+    else badge.classList.add('hidden');
+  }
+
+  function matches(card: HTMLElement) {
+    const cat = card.dataset.category!;
+    const type = card.dataset.type!;
+    const occ = (card.dataset.occasions || '').split(',');
+    const isNew = card.dataset.new === 'true';
+    const best = card.dataset.bestseller === 'true';
+    if (selected.category.size && !selected.category.has(cat)) return false;
+    if (selected.type.size && !selected.type.has(type)) return false;
+    if (selected.occasion.size && !occ.some((o) => selected.occasion.has(o))) return false;
+    if (selected.flag.has('new') && !isNew) return false;
+    if (selected.flag.has('bestseller') && !best) return false;
+    return true;
+  }
+
+  function apply() {
+    let shown = 0;
+    cards.forEach((c) => {
+      const ok = matches(c);
+      c.style.display = ok ? '' : 'none';
+      if (ok) shown++;
+    });
+    countEl.textContent = shown === cards.length ? `Showing all ${cards.length} designs` : `Showing ${shown} of ${cards.length} designs`;
+    noResults.classList.toggle('hidden', shown > 0);
+    sortCards();
+  }
+
+  function sortCards() {
+    const v = sortSel.value;
+    const visible = cards.filter((c) => c.style.display !== 'none');
+    visible.sort((a, b) => {
+      if (v === 'rating') return Number(b.dataset.rating) - Number(a.dataset.rating);
+      if (v === 'newest') return (b.dataset.new === 'true' ? 1 : 0) - (a.dataset.new === 'true' ? 1 : 0);
+      if (v === 'name') return (a.dataset.name || '').localeCompare(b.dataset.name || '');
+      return 0;
+    });
+    if (v !== 'featured') visible.forEach((c) => grid.appendChild(c));
+  }
+
+  chips.forEach((c) =>
+    c.addEventListener('click', () => {
+      const g = c.dataset.group as keyof typeof selected;
+      const v = c.dataset.value!;
+      selected[g].has(v) ? selected[g].delete(v) : selected[g].add(v);
+      syncChips();
+      apply();
+    })
+  );
+
+  sortSel.addEventListener('change', sortCards);
+
+  function clearAll() {
+    (Object.keys(selected) as (keyof typeof selected)[]).forEach((g) => selected[g].clear());
+    syncChips();
+    apply();
+  }
+  document.getElementById('filter-clear')?.addEventListener('click', clearAll);
+  document.getElementById('no-results-clear')?.addEventListener('click', clearAll);
+
+  // Mobile bottom-sheet
+  const panel = document.getElementById('filter-panel')!;
+  const backdrop = document.getElementById('filter-backdrop')!;
+  const openSheet = () => { panel.style.transform = 'translateY(0)'; backdrop.classList.remove('hidden'); document.body.style.overflow = 'hidden'; };
+  const closeSheet = () => { panel.style.transform = ''; backdrop.classList.add('hidden'); document.body.style.overflow = ''; };
+  document.getElementById('filter-open')?.addEventListener('click', openSheet);
+  document.getElementById('filter-close')?.addEventListener('click', closeSheet);
+  document.getElementById('filter-apply')?.addEventListener('click', closeSheet);
+  backdrop.addEventListener('click', closeSheet);
+
+  syncChips();
+  apply();
+</script>

@@ -1,0 +1,12 @@
+---
+import { activeBanner } from '../config/banners';
+const banner = activeBanner();
+---
+{banner && (
+  <div class="bg-[var(--color-gold)] px-4 py-2 text-center text-sm text-white">
+    <span>{banner.message}</span>
+    {banner.cta && banner.href && (
+      <a href={banner.href} class="ml-2 underline underline-offset-2">{banner.cta}</a>
+    )}
+  </div>
+)}

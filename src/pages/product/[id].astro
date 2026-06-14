@@ -1,0 +1,113 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import Icon from '../../components/Icon.astro';
+import { products, getById, similarTo } from '../../lib/products';
+import { imgFull, imgSrcset } from '../../lib/img';
+import { productEnquiry } from '../../lib/waLink';
+import { site } from '../../config/site';
+
+export function getStaticPaths() {
+  return products.map((p) => ({ params: { id: p.id } }));
+}
+
+const { id } = Astro.params;
+const product = getById(id!)!;
+const similar = similarTo(product, 4);
+const stars = '★'.repeat(Math.round(product.rating)) + '☆'.repeat(5 - Math.round(product.rating));
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: product.name,
+  image: `${site.url}${imgFull(product.image)}`,
+  description: product.description,
+  category: `${product.category} ${product.type}`,
+  brand: { '@type': 'Brand', name: site.name },
+  ...(product.weight ? { weight: product.weight } : {}),
+};
+---
+
+<BaseLayout title={product.name} description={product.description || `${product.name} — ${product.category} ${product.type} from Diamond Jewellers.`} jsonLd={jsonLd}>
+  <div class="container-dj section">
+    <!-- Breadcrumb -->
+    <nav class="mb-4 text-sm text-[var(--color-muted)]">
+      <a href="/" class="hover:text-[var(--color-gold)]">Home</a> ·
+      <a href="/collections" class="hover:text-[var(--color-gold)]">Collections</a> ·
+      <span>{product.name}</span>
+    </nav>
+
+    <div class="grid gap-8 md:grid-cols-2">
+      <!-- Image -->
+      <div id="zoom-wrap" class="relative overflow-hidden rounded-xl border border-[var(--color-line)] bg-[var(--color-sand)]">
+        <img
+          id="zoom-img"
+          src={imgFull(product.image)}
+          srcset={imgSrcset(product.image)}
+          sizes="(min-width: 768px) 50vw, 100vw"
+          alt={product.name}
+          width={800}
+          height={800}
+          fetchpriority="high"
+          class="w-full cursor-zoom-in object-cover transition-transform duration-300"
+        />
+      </div>
+
+      <!-- Details -->
+      <div>
+        <p class="text-xs uppercase tracking-wider text-[var(--color-muted)]">{product.category} · {product.type}</p>
+        <h1 class="mt-1 font-[var(--font-heading)] text-[var(--text-h1)]">{product.name}</h1>
+        <p class="mt-2 text-[var(--color-gold)]">{stars} <span class="text-sm text-[var(--color-muted)]">({product.rating})</span></p>
+
+        <ul class="mt-5 space-y-2 text-sm text-[var(--color-muted)]">
+          <li><strong class="text-[var(--color-ink)]">Category:</strong> {product.category}</li>
+          <li><strong class="text-[var(--color-ink)]">Type:</strong> {product.type}</li>
+          {product.weight && <li><strong class="text-[var(--color-ink)]">Weight:</strong> {product.weight}</li>}
+          {product.purity && <li><strong class="text-[var(--color-ink)]">Purity:</strong> {product.purity}</li>}
+        </ul>
+
+        <p class="mt-5 leading-relaxed text-[var(--color-ink)]">{product.description}</p>
+
+        <!-- Desktop CTA -->
+        <div class="mt-6 hidden gap-3 md:flex">
+          <a href={productEnquiry(product.name)} target="_blank" rel="noopener" class="btn btn-whatsapp flex-1">
+            <Icon name="chat" size={18} /> Enquire on WhatsApp
+          </a>
+          <a href="/custom" class="btn btn-secondary flex-1">Customise</a>
+        </div>
+
+        <div class="mt-6 rounded-xl bg-[var(--color-sand)] p-4 text-sm text-[var(--color-muted)]">
+          <p><strong class="text-[var(--color-ink)]">Care:</strong> Avoid chemicals, store separately, clean with a soft cloth. Free lifetime polishing on select pieces.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Similar -->
+    {similar.length > 0 && (
+      <section class="mt-14">
+        <h2 class="section-title">You May Also Like</h2>
+        <div class="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-6">
+          {similar.map((p) => <ProductCard product={p} />)}
+        </div>
+      </section>
+    )}
+  </div>
+
+  <!-- Sticky mobile enquire bar -->
+  <div class="bottom-safe fixed inset-x-0 bottom-16 z-30 flex items-center gap-3 border-t border-[var(--color-line)] bg-white/95 px-4 py-2 backdrop-blur md:hidden">
+    <span class="flex-1 truncate text-sm font-medium">{product.name}</span>
+    <a href={productEnquiry(product.name)} target="_blank" rel="noopener" class="btn btn-whatsapp shrink-0 text-sm">
+      <Icon name="chat" size={16} /> Enquire
+    </a>
+  </div>
+</BaseLayout>
+
+<script>
+  // Tap / click to zoom the product image.
+  const img = document.getElementById('zoom-img');
+  img?.addEventListener('click', () => {
+    const zoomed = img.classList.toggle('scale-[1.8]');
+    img.classList.toggle('cursor-zoom-out', zoomed);
+    img.classList.toggle('cursor-zoom-in', !zoomed);
+  });
+</script>

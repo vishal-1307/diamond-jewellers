@@ -1,0 +1,160 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProductCard from '../components/ProductCard.astro';
+import HeroCarousel from '../components/islands/HeroCarousel.tsx';
+import type { Slide } from '../components/islands/HeroCarousel.tsx';
+import RateWidget from '../components/islands/RateWidget.tsx';
+import { bestSellers, newArrivals } from '../lib/products';
+import { imgThumb, imgSrcset, cardSizes } from '../lib/img';
+import { site } from '../config/site';
+
+const best = bestSellers(8);
+const fresh = newArrivals(8);
+
+const slides: Slide[] = [
+  { slug: 'hero-elegance', title: 'Elegance Redefined. Timeless Beauty.', lead: 'Discover handcrafted jewellery designed to last a lifetime.', cta: 'Explore Collections', href: '/collections' },
+  { slug: 'hero-bridal', title: 'Bridal Masterpieces', lead: 'Make your special day unforgettable with our exclusive bridal sets.', cta: 'View Bridal', href: '/collections?category=Bridal' },
+  { slug: 'hero-custom', title: 'Bespoke Elegance', lead: 'Bring your vision to life with our custom design service.', cta: 'Start Designing', href: '/custom' },
+];
+
+const collections = [
+  { label: 'Rings', slug: 'diamond-rings', href: '/collections?type=Ring' },
+  { label: 'Necklaces', slug: 'pearl-necklace-strand', href: '/collections?type=Necklace' },
+  { label: 'Bangles', slug: 'gold-bangles', href: '/collections?type=Bangles' },
+  { label: 'Bridal', slug: 'gold-bangles-stacked', href: '/collections?category=Bridal' },
+];
+
+const types = [
+  { label: 'Rings', slug: 'diamond-rings', t: 'Ring' },
+  { label: 'Necklaces', slug: 'gold-necklace', t: 'Necklace' },
+  { label: 'Earrings', slug: 'emerald-stud-earrings', t: 'Earrings' },
+  { label: 'Bangles', slug: 'gold-bangles', t: 'Bangles' },
+  { label: 'Pendants', slug: 'solitaire-pendant', t: 'Pendant' },
+  { label: 'Bracelets', slug: 'silver-bangles', t: 'Bracelet' },
+  { label: 'Mangalsutra', slug: 'gold-necklace', t: 'Mangalsutra' },
+  { label: 'Bridal Sets', slug: 'bridal-set-tikka', t: 'Bridal Set' },
+];
+
+const testimonials = [
+  { quote: 'The engagement ring exceeded all expectations. The craftsmanship is simply breathtaking.', name: 'Ramesh Jha' },
+  { quote: 'Stunning designs and impeccable service. They helped me find the perfect anniversary gift.', name: 'Priya Sharma' },
+  { quote: 'Their custom process is fantastic. The final necklace was exactly what I envisioned.', name: 'Amit Patel' },
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'JewelryStore',
+  name: site.name,
+  url: site.url,
+  telephone: site.phoneTel,
+  email: site.email,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: site.address.line1,
+    addressLocality: site.address.locality,
+    addressRegion: site.address.region,
+    postalCode: site.address.postalCode,
+    addressCountry: site.address.country,
+  },
+  geo: { '@type': 'GeoCoordinates', latitude: site.address.lat, longitude: site.address.lng },
+  openingHours: site.hours.schema,
+  image: `${site.url}/og/default.jpg`,
+};
+---
+
+<BaseLayout
+  title="Diamond Jewellers — Elegance Redefined"
+  description="Discover exquisite handcrafted jewellery — rings, necklaces, bridal sets and bespoke designs. Certified diamonds and ethically sourced metals in Benipatti, Madhubani."
+  jsonLd={jsonLd}
+>
+  <HeroCarousel slides={slides} client:idle />
+
+  <!-- Live rate strip -->
+  <RateWidget client:visible variant="strip" />
+
+  <!-- Featured Collections -->
+  <section class="section">
+    <div class="container-dj">
+      <h2 class="section-title">Featured Collections</h2>
+      <div class="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-6">
+        {collections.map((c) => (
+          <a href={c.href} class="group relative block overflow-hidden rounded-xl">
+            <img src={imgThumb(c.slug)} srcset={imgSrcset(c.slug)} sizes={cardSizes} alt={c.label} width={800} height={800}
+              loading="lazy" class="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-110" />
+            <span class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-4 font-[var(--font-heading)] font-semibold text-white">{c.label}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Best Sellers -->
+  <section class="section bg-[var(--color-sand)]">
+    <div class="container-dj">
+      <h2 class="section-title">Our Best Sellers</h2>
+      <div class="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-6">
+        {best.map((p) => <ProductCard product={p} />)}
+      </div>
+      <div class="mt-8 text-center">
+        <a href="/collections" class="btn btn-primary">View All Designs</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Shop by Type -->
+  <section class="section">
+    <div class="container-dj">
+      <h2 class="section-title">Shop by Type</h2>
+      <div class="grid grid-cols-2 gap-3 sm:grid-cols-4 md:gap-6">
+        {types.map((t) => (
+          <a href={`/collections?type=${encodeURIComponent(t.t)}`} class="group block text-center">
+            <div class="overflow-hidden rounded-full">
+              <img src={imgThumb(t.slug)} srcset={imgSrcset(t.slug)} sizes="160px" alt={t.label} width={400} height={400}
+                loading="lazy" class="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-110" />
+            </div>
+            <span class="mt-2 block text-sm font-medium">{t.label}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- New Arrivals -->
+  <section class="section bg-[var(--color-sand)]">
+    <div class="container-dj">
+      <h2 class="section-title">New Arrivals</h2>
+      <div class="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-6">
+        {fresh.map((p) => <ProductCard product={p} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- Craft story -->
+  <section class="section">
+    <div class="container-dj grid items-center gap-8 md:grid-cols-2">
+      <img src={imgThumb('crafting')} srcset={imgSrcset('crafting')} sizes="(min-width:768px) 50vw, 100vw" alt="A jeweller crafting a piece by hand" width={800} height={800} loading="lazy" class="rounded-xl object-cover" />
+      <div>
+        <h2 class="font-[var(--font-heading)] text-[var(--text-h2)]">Crafted with Passion</h2>
+        <p class="mt-4 text-[var(--color-muted)]">For generations we have sourced the finest diamonds and precious metals, transforming them into extraordinary pieces of art.</p>
+        <p class="mt-3 text-[var(--color-muted)]">Each creation reflects our commitment to quality, precision, and timeless design — destined to be cherished for a lifetime.</p>
+        <a href="/about" class="mt-5 inline-block font-semibold text-[var(--color-gold)]">Learn more about us →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials (CSS scroll-snap, no JS) -->
+  <section class="section bg-[var(--color-sand)]">
+    <div class="container-dj">
+      <h2 class="section-title">What Our Customers Say</h2>
+      <div class="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 md:justify-center">
+        {testimonials.map((t) => (
+          <figure class="min-w-[80%] snap-center rounded-xl bg-white p-6 text-center shadow-[var(--shadow-card)] md:min-w-[320px]">
+            <div class="text-[var(--color-gold)]">★★★★★</div>
+            <blockquote class="mt-3 text-sm text-[var(--color-ink)]">“{t.quote}”</blockquote>
+            <figcaption class="mt-3 text-sm font-semibold text-[var(--color-muted)]">— {t.name}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
