@@ -30,11 +30,12 @@ export default function ChatWidget() {
 
   return (
     <>
-      {/* Launcher — sits above the bottom nav on mobile */}
+      {/* Launcher — left side, same height as WhatsApp button on the right */}
       <button
         onClick={() => setOpen((o) => !o)}
         aria-label="Open chat assistant"
-        className="bottom-safe fixed left-4 bottom-20 z-40 grid h-12 w-12 place-items-center rounded-full bg-[var(--color-gold)] text-white shadow-lg md:bottom-6"
+        className="fixed left-4 z-40 grid h-12 w-12 place-items-center rounded-full bg-[var(--color-gold)] text-white shadow-lg"
+        style={{ bottom: 'calc(env(safe-area-inset-bottom, 0px) + 80px)' }}
       >
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
           <path d="M21 11.5a8.4 8.4 0 0 1-12 7.6L3 21l1.9-6A8.4 8.4 0 1 1 21 11.5z" />
@@ -42,7 +43,7 @@ export default function ChatWidget() {
       </button>
 
       {open && (
-        <div className="bottom-safe fixed left-2 right-2 bottom-36 z-50 flex max-h-[70vh] flex-col overflow-hidden rounded-2xl border border-[var(--color-line)] bg-white shadow-2xl md:left-auto md:right-6 md:bottom-24 md:w-96">
+        <div className="fixed left-2 right-2 z-50 flex max-h-[70vh] flex-col overflow-hidden rounded-2xl border border-[var(--color-line)] bg-white shadow-2xl md:left-auto md:right-6 md:w-96" style={{ bottom: 'calc(env(safe-area-inset-bottom, 0px) + 164px)' }}>
           <div className="flex items-center justify-between bg-[var(--color-gold)] px-4 py-3 text-white">
             <span className="font-semibold">Diamond Jewellers Assistant</span>
             <button onClick={() => setOpen(false)} aria-label="Close chat" className="text-xl leading-none">×</button>

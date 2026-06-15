@@ -55,31 +55,36 @@ const current = Astro.url.pathname;
       </button>
     </div>
   </div>
-
-  <!-- Mobile full-screen overlay menu -->
-  <div
-    id="mobile-menu"
-    class="fixed inset-0 z-50 hidden flex-col bg-white px-6 pt-5 md:hidden"
-  >
-    <div class="flex items-center justify-between">
-      <span class="flex items-center gap-2 font-[var(--font-heading)] text-lg font-bold">
-        <Icon name="diamond" size={22} class="text-[var(--color-gold)]" />
-        {site.name}
-      </span>
-      <button id="menu-close" class="grid h-11 w-11 place-items-center" aria-label="Close menu">
-        <Icon name="close" size={26} />
-      </button>
-    </div>
-    <nav class="mt-8 flex flex-col gap-1">
-      <a href="/" class="border-b border-[var(--color-line)] py-4 font-[var(--font-heading)] text-xl">Home</a>
-      {mainNav.map((item) => (
-        <a href={item.href} class="border-b border-[var(--color-line)] py-4 font-[var(--font-heading)] text-xl">
-          {item.label}
-        </a>
-      ))}
-    </nav>
-  </div>
 </header>
+
+<!--
+  Mobile full-screen overlay — placed OUTSIDE <header> so it is not affected by
+  the header's backdrop-filter stacking context (which can make children look
+  transparent in some browsers).
+-->
+<div
+  id="mobile-menu"
+  class="fixed inset-0 z-[60] hidden flex-col px-6 pt-5 md:hidden"
+  style="background-color: #fdfcf9;"
+>
+  <div class="flex items-center justify-between">
+    <span class="flex items-center gap-2 font-[var(--font-heading)] text-lg font-bold">
+      <Icon name="diamond" size={22} class="text-[var(--color-gold)]" />
+      {site.name}
+    </span>
+    <button id="menu-close" class="grid h-11 w-11 place-items-center" aria-label="Close menu">
+      <Icon name="close" size={26} />
+    </button>
+  </div>
+  <nav class="mt-8 flex flex-col gap-1">
+    <a href="/" class="border-b border-[var(--color-line)] py-4 font-[var(--font-heading)] text-xl">Home</a>
+    {mainNav.map((item) => (
+      <a href={item.href} class="border-b border-[var(--color-line)] py-4 font-[var(--font-heading)] text-xl">
+        {item.label}
+      </a>
+    ))}
+  </nav>
+</div>
 
 <script>
   const toggle = document.getElementById('menu-toggle');

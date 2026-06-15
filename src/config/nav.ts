@@ -3,7 +3,6 @@
 export const mainNav = [
   { label: 'Collections', href: '/collections' },
   { label: 'Custom Orders', href: '/custom' },
-  { label: 'Gallery', href: '/gallery' },
   { label: 'FAQ', href: '/faq' },
   { label: 'About', href: '/about' },
   { label: 'Contact', href: '/contact' },

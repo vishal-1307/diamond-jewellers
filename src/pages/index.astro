@@ -3,7 +3,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import ProductCard from '../components/ProductCard.astro';
 import HeroCarousel from '../components/islands/HeroCarousel.tsx';
 import type { Slide } from '../components/islands/HeroCarousel.tsx';
-import RateWidget from '../components/islands/RateWidget.tsx';
 import { bestSellers, newArrivals } from '../lib/products';
 import { imgThumb, imgSrcset, cardSizes } from '../lib/img';
 import { site } from '../config/site';
@@ -68,9 +67,6 @@ const jsonLd = {
   jsonLd={jsonLd}
 >
   <HeroCarousel slides={slides} client:idle />
-
-  <!-- Live rate strip -->
-  <RateWidget client:visible variant="strip" />
 
   <!-- Featured Collections -->
   <section class="section">

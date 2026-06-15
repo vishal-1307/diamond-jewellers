@@ -43,7 +43,7 @@ export const site = {
   // TODO(owner): replace placeholder URLs with the shop's real profiles.
   // Set a value to null/'' to hide that icon.
   social: {
-    instagram: 'https://www.instagram.com/', // PLACEHOLDER — awaiting real URL
+    instagram: 'https://www.instagram.com/diamondjewellers__',
     facebook: 'https://www.facebook.com/', // PLACEHOLDER — awaiting real URL
   },
 } as const;

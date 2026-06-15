@@ -7,6 +7,7 @@ import BottomNav from '../components/BottomNav.astro';
 import Banner from '../components/Banner.astro';
 import Icon from '../components/Icon.astro';
 import ChatWidget from '../components/islands/ChatWidget.tsx';
+import RateWidget from '../components/islands/RateWidget.tsx';
 import { generalEnquiry } from '../lib/waLink';
 
 interface Props {
@@ -41,6 +42,7 @@ const { title, description, ogImage, jsonLd } = Astro.props;
   <body class="min-h-dvh">
     <Banner />
     <Header />
+    <RateWidget client:visible />
 
     <main class="pb-20 md:pb-0">
       <slot />
@@ -49,44 +51,23 @@ const { title, description, ogImage, jsonLd } = Astro.props;
     <Footer />
     <BottomNav />
 
-    <!-- Floating actions -->
+    <!-- Floating WhatsApp button — right side, clears bottom nav on mobile -->
     <a
       href={generalEnquiry()}
       target="_blank"
       rel="noopener"
       aria-label="Chat on WhatsApp"
-      class="bottom-safe fixed right-4 bottom-20 z-40 grid h-14 w-14 place-items-center rounded-full bg-[var(--color-whatsapp)] text-white shadow-lg md:bottom-6"
+      class="fixed right-4 z-40 grid h-14 w-14 place-items-center rounded-full bg-[var(--color-whatsapp)] text-white shadow-lg"
+      style="bottom: calc(env(safe-area-inset-bottom, 0px) + 80px)"
     >
       <Icon name="chat" size={28} />
     </a>
-    <button
-      id="back-to-top"
-      aria-label="Back to top"
-      class="bottom-safe fixed right-4 bottom-36 z-40 hidden h-11 w-11 place-items-center rounded-full bg-[var(--color-gold)] text-white shadow-lg md:bottom-24"
-    >
-      <Icon name="arrowUp" size={20} />
-    </button>
 
+    <!-- ChatWidget launcher sits on the left, same height -->
     <ChatWidget client:idle />
 
     <script>
       import '../scripts/saved-ui.ts';
-
-      // Back-to-top
-      const btt = document.getElementById('back-to-top');
-      if (btt) {
-        const onScroll = () => {
-          if (window.scrollY > 400) {
-            btt.classList.remove('hidden');
-            btt.classList.add('grid');
-          } else {
-            btt.classList.add('hidden');
-            btt.classList.remove('grid');
-          }
-        };
-        window.addEventListener('scroll', onScroll, { passive: true });
-        btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-      }
 
       // Register service worker (PWA)
       if ('serviceWorker' in navigator) {
