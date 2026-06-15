@@ -13,15 +13,17 @@ export const site = {
   whatsappNumber: '919931454704', // intl format, no +, no spaces (for wa.me)
   phoneDisplay: '+91 99314 54704',
   phoneTel: '+919931454704',
-  email: 'diamondjewellersbenipatti@gmail.com',
+  phone2Display: '+91 85443 28394',
+  phone2Tel: '+918544328394',
+  email: 'diamondjewellers1995@gmail.com',
 
   // — Address —
   address: {
-    line1: 'In front of Hospital Road, Benipatti',
-    line2: 'Madhubani, Bihar 847223',
+    line1: 'In front of Hospital Road, Vidyapati Chowk',
+    line2: 'Benipatti, Madhubani, Bihar 847452',
     locality: 'Benipatti',
     region: 'Bihar',
-    postalCode: '847223',
+    postalCode: '847452',
     country: 'IN',
     // Google Maps embed (place: Diamond Jewellers, Benipatti)
     mapsEmbed:
@@ -31,17 +33,16 @@ export const site = {
     lng: 85.89947041143203,
   },
 
-  // — Hours —
+  // — Hours — open every day 8 AM – 8 PM
   hours: {
-    display: 'Mon – Sat: 10:00 AM – 8:00 PM',
-    sunday: 'Sunday: Closed',
+    display: 'Every day: 8:00 AM – 8:00 PM',
+    sunday: 'Open on Sundays too',
     // Schema.org openingHours format
-    schema: 'Mo-Sa 10:00-20:00',
+    schema: 'Mo-Su 08:00-20:00',
   },
 
   // — Social links —
-  // TODO(owner): replace placeholder URLs with the shop's real profiles.
-  // Set a value to null/'' to hide that icon.
+  // Set a value to '' to hide that icon.
   social: {
     instagram: 'https://www.instagram.com/diamondjewellers__',
     facebook: 'https://www.facebook.com/', // PLACEHOLDER — awaiting real URL
