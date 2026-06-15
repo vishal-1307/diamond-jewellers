@@ -10,7 +10,9 @@ export const site = {
   url: 'https://diamond-jewellers.vercel.app',
 
   // — Contact —
-  whatsappNumber: '919931454704', // intl format, no +, no spaces (for wa.me)
+  // Business WhatsApp (primary enquiry channel)
+  whatsappNumber: '918544328394', // intl format, no +, no spaces (for wa.me)
+  // Owner phone — call only (not WhatsApp)
   phoneDisplay: '+91 99314 54704',
   phoneTel: '+919931454704',
   phone2Display: '+91 85443 28394',

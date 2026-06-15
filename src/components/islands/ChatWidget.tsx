@@ -9,6 +9,7 @@ export default function ChatWidget() {
   ]);
   const [input, setInput] = useState('');
   const [busy, setBusy] = useState(false);
+  const [offline, setOffline] = useState(false);
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -22,7 +23,8 @@ export default function ChatWidget() {
       const reply = await sendChat(next);
       setMessages((m) => [...m, { role: 'assistant', content: reply }]);
     } catch {
-      setMessages((m) => [...m, { role: 'assistant', content: 'Something went wrong. Please try WhatsApp for now.' }]);
+      setOffline(true);
+      setMessages((m) => [...m, { role: 'assistant', content: 'Our assistant is temporarily unavailable.' }]);
     } finally {
       setBusy(false);
     }
@@ -80,6 +82,14 @@ export default function ChatWidget() {
             />
             <button type="submit" disabled={busy} className="btn btn-primary px-4 py-2 text-sm">Send</button>
           </form>
+          {offline && (
+            <p className="border-t border-[var(--color-line)] bg-[var(--color-sand)] px-4 py-2 text-center text-xs text-[var(--color-muted)]">
+              WhatsApp us directly:{' '}
+              <a href="https://wa.me/918544328394" target="_blank" rel="noopener" className="font-semibold text-[var(--color-whatsapp)] underline">
+                +91 85443 28394
+              </a>
+            </p>
+          )}
           <a href={generalEnquiry()} target="_blank" rel="noopener" className="border-t border-[var(--color-line)] py-2 text-center text-xs text-[var(--color-whatsapp)]">
             Or chat on WhatsApp →
           </a>

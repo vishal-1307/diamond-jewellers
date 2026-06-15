@@ -17,10 +17,12 @@ export async function sendChat(messages: ChatMessage[]): Promise<string> {
     await new Promise((r) => setTimeout(r, 500));
     return "Our AI assistant is coming soon! Meanwhile, please enquire on WhatsApp and our team will help you right away.";
   }
+  const currentMessage = messages[messages.length - 1];
+  const history = messages.slice(0, -1);
   const res = await fetch(`${ENDPOINT.replace(/\/$/, '')}/chat`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ messages }),
+    body: JSON.stringify({ message: currentMessage.content, history }),
   });
   if (!res.ok) throw new Error(`Chat API error ${res.status}`);
   const data = await res.json();
